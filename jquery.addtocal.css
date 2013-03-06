@@ -1,5 +1,3 @@
-
-
 .ui-addtocal {
   cursor:pointer;cursor:hand;
 }
@@ -7,4 +5,33 @@
 ul.ui-addtocal {
   cursor:default;
   position:absolute;
+}
+
+.addtocal:hover {
+	text-decoration: underline;
+	cursor:pointer;cursor:hand;
+}
+
+.addtocal .summary,
+.addtocal .dtstart,
+.addtocal .dtend,
+.addtocal .description,
+.addtocal .location,
+.addtocal .icalurl,
+.addtocal .vcalurl,
+.addtocal .webcalurl,
+.addtocal .url {
+	display:none;
+}
+
+.ui-addtocal .ui-menu-item {
+	cursor:pointer;cursor:hand;
+}
+
+.ui-addtocal .ui-menu-item img {
+	padding-right:5px;
+	max-height: 16px;
+	max-width: 16px;
+	height: expression(this.height >= this.width && this.height > 16 ? 16 : true);
+	width: expression(this.height < this.width && this.width > 16 ? 16 : true);
 }

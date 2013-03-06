@@ -22,6 +22,7 @@
       calendars : [
         {value: 1,
           label:"Add to Google Calendar",
+		  //icon:"src/icon_google.png",
           enabled : function(addtocal) { return true; },
           formatlink : function(eventDetails) {
             return "http://www.google.com/calendar/event?action=TEMPLATE&trp=false" +
@@ -33,6 +34,7 @@
             "&sprop=" + eventDetails.url;
           } },
         {value: 2, label:"Add to Live Calendar",
+		  icon:"src/icon_msnlive.png",
           enabled : function(addtocal) { return true; },
           formatlink : function(eventDetails) {
             return "http://calendar.live.com/calendar/calendar.aspx?rru=addevent" +
@@ -42,6 +44,7 @@
             "&location=" + eventDetails.location;
           } },
         {value: 3, label:"Add to Yahoo! Calendar",
+		  icon:"src/icon_yahoo.png",
           enabled : function(addtocal) { return true; },
           formatlink : function(eventDetails) {
             var minsDuration = ( Date.parse(eventDetails.end) - Date.parse(eventDetails.start) ) / 60 / 1000;
@@ -55,20 +58,29 @@
             "&URL=" + eventDetails.url;
           } },
         {value: 4, label:"Add to 30boxes",
+		  icon:"src/icon_30boxes.png",
           enabled : function(addtocal) { return addtocal.options.icalEnabled; },
           formatlink : function(eventDetails) {
             return ( eventDetails.webcalurl ?
             "http://30boxes.com/add.php?webcal=" + encodeURIComponent( eventDetails.webcalurl ) : null );
           } },
         {value: 5, label:"iCal",
+		  icon:"src/icon_ical.png",
           enabled : function(addtocal) { return addtocal.options.icalEnabled; },
           formatlink : function(eventDetails) {
             return (eventDetails.icalurl ? eventDetails.icalurl : null);
           } },
         {value: 6, label:"vCalendar",
+		  icon:"src/icon_ical.png",
           enabled : function(addtocal) { return addtocal.options.vcalEnabled; },
           formatlink : function(eventDetails) {
             return ( eventDetails.vcalurl ? eventDetails.vcalurl : null );
+          } },
+        {value: 1, label:"Add to Outlook",
+		  icon:"src/icon_outlook.gif",
+          enabled : function(addtocal) { return addtocal.options.icalEnabled; },
+          formatlink : function(eventDetails) {
+            return (eventDetails.icalurl ? eventDetails.icalurl : null);
           } }
       ],
 
@@ -205,7 +217,7 @@
       var self = this;
       self.source=[];
       $.each( this.options.calendars, function(index, value) {
-        if(value.enabled(self)) self.source.push( {value: value.value, label: value.label } );
+        if(value.enabled(self)) self.source.push( {value: value.value, label: value.label, icon: value.icon } );
       });
     },
 
@@ -239,12 +251,14 @@
       	if ( typeof item === "string" ) {
       		return {
       			label: item,
-      			value: item
+      			value: item,
+      			icon: item
       		};
       	}
       	return $.extend({
       		label: item.label || item.value,
-      		value: item.value || item.label
+      		value: item.value || item.label,
+      		icon:  item.icon  || item.icon
       	}, item );
       });
     },
@@ -278,7 +292,7 @@
     _renderItem: function( ul, item) {
       return $( "<li></li>" )
       	.data( "item.addtocal", item )
-      	.append( $( "<a></a>" ).text( item.label ) )
+      	.append( $( "<a></a>" ).text( item.label ).prepend((item.icon ? "<img src='" + item.icon + "'>" : "")) )
       	.appendTo( ul );
     },
 
